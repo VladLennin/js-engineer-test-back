@@ -1,4 +1,4 @@
-import {Body, Controller, Module, Post, Req} from '@nestjs/common';
+import {Body, Controller, Get, Module, Post, Req} from '@nestjs/common';
 import {SuperPowersService} from "./superpowers.service";
 
 @Controller("superpower")
@@ -8,9 +8,13 @@ export class SuperPowersController {
     }
 
     @Post()
-    createSuperPower(@Req() req) {
-        const power = req.body.power;
+    createSuperPower(@Body("power") power: string) {
         return this.superpowerService.createSuperPower(power)
+    }
+
+    @Get()
+    getSuperpowers() {
+        return this.superpowerService.getAllSuperpowers()
     }
 
 }

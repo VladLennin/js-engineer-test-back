@@ -15,7 +15,7 @@ export class ImageService {
         try {
             for (let i = 0; i < files.length; i++) {
                 const filename = uuid.v4() + files[i].name + "." + files[i].originalname.split('.').pop()
-                const filepath = path.resolve(__dirname, "..", "static")
+                const filepath = path.resolve(__dirname, "..", "..", "uploads")
 
                 if (!fs.existsSync(filepath)) {
                     fs.mkdirSync(filepath, {recursive: true})
@@ -28,6 +28,27 @@ export class ImageService {
         } catch (e) {
             throw new HttpException("Error during uploading file!", 500)
         }
+    }
+
+    async getImageByPk(id: number) {
+        return this.imageRepository.findByPk(id)
+    }
+
+    async removeImg(id: number) {
+        const img = await this.imageRepository.findByPk(id)
+        if (!img) {
+            throw new HttpException("Image doesnt exist!", 404)
+        }
+        const filepath = path.resolve(__dirname, "..", "..", "uploads", img.href)
+
+        fs.unlink(filepath, (err) => {
+            if (err) {
+                console.error('Error deleting file:', err);
+            } else {
+                console.log('File deleted successfully');
+            }
+        });
+        return await img.destroy()
     }
 
 }

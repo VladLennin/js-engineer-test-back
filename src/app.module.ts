@@ -14,7 +14,7 @@ import * as path from 'path';
 @Module({
     imports: [
         ServeStaticModule.forRoot({
-            rootPath: path.resolve(__dirname, 'static'),
+            rootPath: path.resolve('uploads'),
         }),
         SequelizeModule.forRoot({
             dialect: 'postgres',

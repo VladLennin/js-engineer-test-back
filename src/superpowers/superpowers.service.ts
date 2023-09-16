@@ -15,6 +15,9 @@ export class SuperPowersService {
             throw new HttpException("SuperPower with this power already exist", 409)
         }
         return await this.superpowerRepo.create({power})
+    }
 
+    async getAllSuperpowers() {
+        return this.superpowerRepo.findAll();
     }
 }
