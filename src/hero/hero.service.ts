@@ -27,8 +27,7 @@ export class HeroService {
 
         await newHero.$set('superpowers', heroDto.superpowers)
 
-
-        return await this.heroRepository.findByPk(newHero.id, {include: {all: true}})
+        return this.heroRepository.findByPk(newHero.id, {include: {all: true}})
     }
 
     async editHero(editedHero: Hero, files: any): Promise<Hero> {
@@ -53,7 +52,7 @@ export class HeroService {
             throw new HttpException('Hero not found', 404);
         }
         await hero.destroy()
-        await this.heroesSuperPowersRepo.destroy({where: {heroId: id}})
+        return this.heroesSuperPowersRepo.destroy({where: {heroId: id}})
     }
 
     async getHeroByPk(id: number) {

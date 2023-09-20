@@ -48,7 +48,7 @@ export class ImageService {
                 console.log('File deleted successfully');
             }
         });
-        return await img.destroy()
+        return img.destroy()
     }
 
 }
